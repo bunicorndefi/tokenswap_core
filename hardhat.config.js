@@ -32,15 +32,15 @@ module.exports = {
   networks: {
     bsc: {
       url: 'https://bsc-dataseed1.binance.org',
-      accounts: ['private-key-here']
+      accounts: ['']
     },
     testnet: {
       url: 'https://data-seed-prebsc-1-s1.binance.org:8545',
-      accounts: ['private-key-here']
+      accounts: ['']
     },
     kovan: {
       url: 'https://eth-kovan.alchemyapi.io/v2/voa3n4HdJlkxy5fwfVZ4OhSwxGzv01y2',
-      accounts: ['private-key-here'],
+      accounts: [''],
       live: true,
       saveDeployments: true,
     }

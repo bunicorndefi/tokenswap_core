@@ -461,23 +461,7 @@ contract ConfigurableRightsPool is PCToken, BuniOwnable, BuniReentrancyGuard {
         needsBPool
         virtual
     {
-        require(rights.canAddRemoveTokens, "ERR_CANNOT_ADD_REMOVE_TOKENS");
-
-        // Can't do this while a progressive update is happening
-        require(gradualUpdate.startBlock == 0, "ERR_NO_UPDATE_DURING_GRADUAL");
-
-        SmartPoolManager.verifyTokenCompliance(token);
-
-        emit NewTokenCommitted(token, address(this), msg.sender);
-
-        // Delegate to library to save space
-        SmartPoolManager.commitAddToken(
-            bPool,
-            token,
-            balance,
-            denormalizedWeight,
-            newToken
-        );
+        revert("NO_ONE_CAN_COMMIT_TOKENS");
     }
 
     /**
@@ -491,15 +475,7 @@ contract ConfigurableRightsPool is PCToken, BuniOwnable, BuniReentrancyGuard {
         needsBPool
         virtual
     {
-        require(rights.canAddRemoveTokens, "ERR_CANNOT_ADD_REMOVE_TOKENS");
-
-        // Delegate to library to save space
-        SmartPoolManager.applyAddToken(
-            IConfigurableRightsPool(address(this)),
-            bPool,
-            addTokenTimeLockInBlocks,
-            newToken
-        );
+        revert("NO_ONE_CAN_ADD_TOKENS");
     }
 
      /**
@@ -514,15 +490,7 @@ contract ConfigurableRightsPool is PCToken, BuniOwnable, BuniReentrancyGuard {
         onlyOwner
         needsBPool
     {
-        // It's possible to have remove rights without having add rights
-        require(rights.canAddRemoveTokens,"ERR_CANNOT_ADD_REMOVE_TOKENS");
-        // After createPool, token list is maintained in the underlying BPool
-        require(!newToken.isCommitted, "ERR_REMOVE_WITH_ADD_PENDING");
-        // Prevent removing during an update (or token lists can get out of sync)
-        require(gradualUpdate.startBlock == 0, "ERR_NO_UPDATE_DURING_GRADUAL");
-
-        // Delegate to library to save space
-        SmartPoolManager.removeToken(IConfigurableRightsPool(address(this)), bPool, token);
+        revert("NO_ONE_CAN_REMOVE_TOKENS");
     } 
 
     /**
