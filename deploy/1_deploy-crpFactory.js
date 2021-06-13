@@ -7,32 +7,34 @@ module.exports = async ({
   
   await deploy('BFactory', {
     from: deployer,
+    owner: deployer,
     log: true,
-    deterministicDeployment: true,
+    deterministicDeployment: false,
   });
 
   // Libraries
   const buniSafeMath = await deploy('BuniSafeMath', {
     from: deployer,
+    owner: deployer,
     log: true,
-    deterministicDeployment: true,
+    deterministicDeployment: false,
   });
-
   const rightsManager = await deploy('RightsManager', {
     from: deployer,
+    owner: deployer,
     log: true,
-    deterministicDeployment: true,
+    deterministicDeployment: false,
   });
-
   const smartPoolManager = await deploy('SmartPoolManager', {
     from: deployer,
+    owner: deployer,
     log: true,
-    deterministicDeployment: true,
+    deterministicDeployment: false,
   });
-
   // Factory
   await deploy('CRPFactory', {
     from: deployer,
+    owner: deployer,
     log: true,
     args: [],
     libraries: {
@@ -40,7 +42,7 @@ module.exports = async ({
       'RightsManager': rightsManager.address,
       'SmartPoolManager': smartPoolManager.address
     },
-    deterministicDeployment: true,
+    deterministicDeployment: false,
   });
 };
-module.exports.tags = ['bunicore'];
+module.exports.tags = ['MyContract'];

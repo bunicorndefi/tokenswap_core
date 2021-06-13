@@ -78,6 +78,11 @@ contract BPool is BToken, BMath {
         _;
     }
 
+    modifier _onlyNotFinalized() {
+        require(_finalized, "ERR_NOT_FINALIZED");
+        _;
+    }
+
     bool private _mutex;
 
     address private _factory;    // BFactory address to push token exitFee to
@@ -139,7 +144,7 @@ contract BPool is BToken, BMath {
     function getFinalTokens()
         external view
         _viewlock_
-        _onlyFinalized
+        _onlyNotFinalized
         returns (address[] memory tokens)
     {
         return _tokens;
@@ -374,7 +379,7 @@ contract BPool is BToken, BMath {
 
     function joinPool(uint poolAmountOut, uint[] calldata maxAmountsIn)
         external
-        _onlyFinalized
+        _onlyNotFinalized
         _logs_
         _lock_
     {
@@ -399,7 +404,7 @@ contract BPool is BToken, BMath {
     function exitPool(uint poolAmountIn, uint[] calldata minAmountsOut)
         external
         _logs_
-        _onlyFinalized
+        _onlyNotFinalized
         _lock_
     {
         uint poolTotal = totalSupply();
@@ -556,7 +561,7 @@ contract BPool is BToken, BMath {
         external
         _logs_
         _lock_
-        _onlyFinalized
+        _onlyNotFinalized
         returns (uint poolAmountOut)
 
     {        
@@ -591,7 +596,7 @@ contract BPool is BToken, BMath {
         external
         _logs_
         _lock_
-        _onlyFinalized
+        _onlyNotFinalized
         returns (uint tokenAmountIn)
     {
         require(_records[tokenIn].bound, "ERR_NOT_BOUND");
@@ -627,7 +632,7 @@ contract BPool is BToken, BMath {
         external
         _logs_
         _lock_
-        _onlyFinalized
+        _onlyNotFinalized
         returns (uint tokenAmountOut)
     {
         require(_records[tokenOut].bound, "ERR_NOT_BOUND");
@@ -665,7 +670,7 @@ contract BPool is BToken, BMath {
         external
         _logs_
         _lock_
-        _onlyFinalized
+        _onlyNotFinalized
         returns (uint poolAmountIn)
     {
         require(_records[tokenOut].bound, "ERR_NOT_BOUND");
